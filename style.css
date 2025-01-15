@@ -37,13 +37,15 @@ body {
     border-radius: 8px;
     box-sizing: border-box;
     position: relative;
+    
 }
 
 .number {
     position: absolute;
     bottom: 0;
     right: 0;
-    font-size: 43px;
+    font-size: 45px;
+    padding-right: 6px;
 }
 
 
