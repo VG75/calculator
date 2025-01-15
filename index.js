@@ -1,66 +1,113 @@
-const smallButtons = document.querySelectorAll(".small-buttons");
-const bigButtons = document.querySelectorAll(".big-buttons");
 const buttons = document.querySelectorAll("button");
 const span = document.querySelector("span");
 
 let operandString1 = "", operandString2 = "", operand = "";
-let isOperandPressed = false;
+let isOperandPressed = false, isSecondOperandPressed = false;
 
-
-buttons.forEach(button => {
+buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
         const selectedButton = e.target;
-        console.log(isOperandPressed, operandString1, operandString2);
+
         if (!selectedButton.hasAttributes()) {
+            // Handle number input
             displayNum(selectedButton.textContent);
-        }
-        if (selectedButton.hasAttributes()) {
+        } else {
+            // Handle operator and functional buttons
             if (selectedButton.classList.contains("operator")) {
-                if (isOperandPressed) handleDoublePress();
-                else handleOperandPress();
+                handleOperator(selectedButton.innerText);
             } else {
                 if (selectedButton.id === "clear") {
                     clear();
-                }
-                if (selectedButton.id === "delete") {
+                } else if (selectedButton.id === "delete") {
                     deleteEle();
-                }
-                if (selectedButton.id === "equals") {
-                    if (isOperandPressed) {
+                } else if (selectedButton.id === "equals") {
+                    if (isOperandPressed && isSecondOperandPressed) {
                         performOperation();
                     } else {
-                        alert("Give the Operand");
+                        span.textContent = "Enter numbers first!";
                     }
                 }
-                
             }
-            
         }
     });
 });
 
 function displayNum(selectedNumber) {
-    operandString1 += selectedNumber
-    span.textContent = `${operandString1}`;
+    if (isOperandPressed) {
+        isSecondOperandPressed = true;
+        operandString2 += selectedNumber;
+        span.textContent = operandString2 || "0";
+    } else {
+        operandString1 += selectedNumber;
+        span.textContent = operandString1 || "0";
+    }
+}
+
+function handleOperator(selectedOperator) {
+    if (isOperandPressed && isSecondOperandPressed) {
+        // Perform operation if both operands are present
+        performOperation();
+    }
+    isOperandPressed = true;
+    operand = selectedOperator;
 }
 
 function clear() {
     operandString1 = "";
     operandString2 = "";
-    span.innerText = 0;
+    operand = "";
+    isOperandPressed = false;
+    isSecondOperandPressed = false;
+    span.textContent = "0";
 }
 
 function deleteEle() {
-    let currentNumber =  span.innerText;
-    currentNumber = currentNumber.slice(0, -1);
-    span.innerText = currentNumber;
-    if (isOperandPressed) operandString2 = operandString2.slice(0, -1);
-    else operandString1 = operandString1.slice(0, -1);
+    if (isOperandPressed) {
+        operandString2 = operandString2.slice(0, -1);
+        span.textContent = operandString2 || "0";
+    } else {
+        operandString1 = operandString1.slice(0, -1);
+        span.textContent = operandString1 || "0";
+    }
 }
 
-// function performOperation() {
+function performOperation() {
+    const x = parseFloat(operandString1);
+    const y = parseFloat(operandString2);
+    let result = 0;
 
-// }
+    if (operand === "/" && y === 0) {
+        span.textContent = "Infinity";
+        clear();
+        return;
+    }
+
+    switch (operand) {
+        case "+":
+            result = x + y;
+            break;
+        case "-":
+            result = x - y;
+            break;
+        case "*":
+            result = x * y;
+            break;
+        case "/":
+            result = x / y;
+            break;
+        default:
+            span.textContent = "Error";
+            return;
+    }
+
+    result = Math.round(result * 100) / 100; // Round to 2 decimal places
+    operandString1 = `${result}`;
+    operandString2 = "";
+    isOperandPressed = false;
+    isSecondOperandPressed = false;
+    span.textContent = operandString1;
+}
+
 
 // bigButtons.forEach(button => {
 //     button.addEventListener("click", (e) => {
