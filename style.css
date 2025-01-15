@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 25%;
+    height: 80%;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.inner-container {
+    width: 93%;
+    height: 93%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    gap: 15px;
+}
+
+.display {
+    width: 100%;
+    height: 23%;
+    border: 2px solid black;
+    border-radius: 8px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.number {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 43px;
+}
+
+
+button {
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.big-buttons {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    
+}
+
+.big-buttons button {
+    flex: 1;
+    font-size: 18px;
+}
+
+button:hover {
+    opacity: 0.75;
+}
+
+#clear {
+    background-color: rgb(235, 130, 130);
+    color: black;
+    font-weight: 300;
+}
+
+#delete {
+    background-color: rgb(124, 124, 243);
+    color: black;
+    font-weight: 300;
+}
+
+.small-buttons {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    gap: 15px;
+}
+
+.small-buttons button {
+    flex: 1;
+    background-color: rgb(215, 186, 142);
+    font-weight: 500;
+    font-size: 20px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 22px;
+    margin-top: 100px;
+}
